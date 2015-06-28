@@ -1,0 +1,88 @@
+{% extends "layout.html.twig" %}
+
+{% block title %}Gestion des utilisateurs{% endblock %}
+
+{% block content %}
+{% if userForm %}
+	{% if user.id %}
+	<h1>Modification de {{ user.prenom }} {{ user.nom }}</h1><br>
+	{% else %}
+	<h1>Ajout d'un utilisateur</h1><br>
+	{% endif %}
+	{{ form_start(userForm) }}
+		<div class="col-lg-12 form-group">
+			{{ form_widget(userForm.username, { 'attr':  {
+				'class': 'form-control',
+				'placeholder': 'Nom d\'utilisateur' 
+			}}) }}	
+		</div>
+		{% if usernow %}<div name class="col-lg-12 form-group">{% else %}<div name class="col-lg-8 form-group">{% endif %}
+			{{ form_widget(userForm.password, { 'attr':  {
+				'class': 'form-control',
+				'placeholder': 'Mot de passe' 
+			}}) }}
+		</div><div name class="col-lg-4 form-group">
+			{{ form_widget(userForm.role, { 'attr':  {
+				'class': 'form-control',
+			}}) }}
+		</div><div name class="col-lg-6 form-group">
+			{{ form_widget(userForm.nom, { 'attr':  {
+				'class': 'form-control',
+				'placeholder': 'Nom' 
+			}}) }}
+		</div><div name class="col-lg-6 form-group">
+			{{ form_widget(userForm.prenom, { 'attr':  {
+				'class': 'form-control',
+				'placeholder': 'Prenom' 
+			}}) }}
+		</div><div name class="col-lg-6 form-group">
+			{{ form_widget(userForm.isadh, { 'attr':  {
+				'class': 'form-control',
+				'onChange': 'action_isadh_dis();'
+			}}) }}
+		</div><div class="col-lg-6 form-group">
+			{{ form_widget(userForm.idadh, { 'attr':  {
+				'class': 'form-control',
+			}}) }}
+		</div>
+		<div class="col-lg-12 form-group">
+			<input type="submit" class="col-lg-12 btn btn-success" id="bt_hh" value="Valider" />
+		</div>
+	{{ form_end(userForm) }}
+	{% if user.id and usernow != true %}
+		<div class="col-lg-12 form-group"><a class="btn btn-primary col-lg-12" href="{{ path('user-list') }}">Retour à la liste</a></div>
+	{% elseif not user.id and usernow != true %}
+		<div class="col-lg-12 form-group"><a class="btn btn-danger col-lg-12" href="{{ path('user-list') }}">Annuler l'ajout et retour à la liste</a></div>
+	{% else %}
+		<div class="col-lg-12 form-group"><a class="btn btn-primary col-lg-12" href="{{ path('ac') }}">Retour a l'accueil</a></div>
+	{% endif %}
+	{% for flashMessage in app.session.flashbag.get('success') %}
+		<div class="col-lg-12 alert alert-success">
+			{{ flashMessage }}
+		</div>
+	{% endfor %}
+	{% for flashMessage in app.session.flashbag.get('danger') %}
+		<div class="col-lg-12 alert alert-danger">
+			{{ flashMessage }}
+		</div>
+	{% endfor %}
+	
+{% else %}
+	<br><br>
+	<div class="alert alert-danger" role="alert">Vous devez être connecté pour gérer les adhérents !</div>
+{% endif %}
+{% endblock %}
+{% block scripts %}
+<script>
+	function action_isadh_dis() {
+		var isadh = document.getElementById('adherent_isadh').options.selectedIndex;
+		if (isadh == 1) {
+			document.getElementById('adherent_idadh').disabled = true;
+		} else {
+			document.getElementById('adherent_idadh').disabled = false;
+			console.log("act");
+		}
+		console.log(isadh);
+	}
+</script>
+{% endblock %}

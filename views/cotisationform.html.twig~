@@ -1,0 +1,42 @@
+{% extends "layout.html.twig" %}
+
+{% block title %}Gestion des cotisations{% endblock %}
+
+{% block content %}
+{% if cotisationForm %}
+	{% if cotisation.id %}
+	<h1>Modification de la cotisation du {{ cotisation.date }} de {{ adherent.nom }} {{ adherent.prenom }}</h1><br>
+	{% else %}
+	<h1>Ajout d'une cotisation pour {{ adherent.nom }} {{ adherent.prenom }}</h1><br>
+	{% endif %}
+	{{ form_start(cotisationForm) }}
+		<div class="col-lg-12 form-group"><div class="input-group"><div class="input-group-addon">$</div>
+			{{ form_widget(cotisationForm.montant, { 'attr':  {
+				'class': 'form-control',
+				'placeholder': 'Montant' 
+			}}) }}	
+		</div></div></div>
+		<div class="col-lg-12 form-group">
+			<input type="submit" class="col-lg-12 btn btn-success" id="bt_hh" value="Valider" />
+		</div>
+	{{ form_end(cotisationForm) }}
+	{% if cotisation.id %}
+		<div class="col-lg-12 form-group"><a class="btn btn-primary col-lg-12" href="{{ path('adherent',{'id':cotisation.adhid}) }}">Retour à la fiche utilisateur</a></div>
+	{% else %}
+		<div class="col-lg-12 form-group"><a class="btn btn-danger col-lg-12" href="{{ path('adherent',{'id':cotisation.adhid}) }}">Annuler et retourner à la fiche utilisateur</a></div>
+	{% endif %}
+	{% for flashMessage in app.session.flashbag.get('success') %}
+		<div class="col-lg-12 alert alert-success">
+			{{ flashMessage }}
+		</div>
+	{% endfor %}
+	
+{% else %}
+	<br><br>
+	<div class="alert alert-danger" role="alert">Vous devez être connecté pour gérer les groupes !</div>
+{% endif %}
+{% endblock %}
+{% block scripts %}
+<script>
+</script>
+{% endblock %}

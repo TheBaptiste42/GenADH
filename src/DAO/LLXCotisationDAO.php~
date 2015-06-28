@@ -1,0 +1,61 @@
+<?php
+
+namespace GenADH\DAO;
+
+use GenADH\Domain\Cotisation;
+
+class LLXCotisationDAO extends DAO
+{
+	
+	public function findByUser($userid) {
+		$sql = "select * from llx_cotisation where cot_adh=?";
+		$result = $this->getDb()->fetchAll($sql, array($userid));
+
+      // Convert query result to an array of domain objects
+      $i = 0;
+      $cotisations = array();
+      foreach ($result as $row) {
+          $cotisationId = $i;
+          $i++;
+          $cotisations[$cotisationId] = $this->buildDomainObject($row);
+      }
+      return $cotisations;
+	}
+	
+	public function save(Cotisation $cotisation) {
+			$cotisationData = array(
+				'cot_date' => $cotisation->getDate(),
+				'cot_adh' => $cotisation->getAdhid(),
+				'cot_montant' => $cotisation->getMontant(),
+				'int_user_auteur' => $cotisation->getAuteur()
+			);
+			if ($cotisation->getId()) {
+				$this->getDb()->update('t_adherent_cotisation_cop', $cotisationData, array('cot_id' => $cotisation->getId()));
+			} else {
+				$this->getDb()->insert('t_adherent_cotisation_cop', $cotisationData);
+				
+				$id = $this->getDb()->lastInsertId();
+				$cotisation->setId($id);
+			}
+	}
+	
+	public function del(Cotisation $cotisation) {
+			$sql = "delete from t_adherent_cotisation where cot_id=?";
+			$this->getDb()->executeQuery($sql, array($cotisation->getId()));
+	}
+
+    /**
+     * Creates an Article object based on a DB row.
+     *
+     * @param array $row The DB row containing Article data.
+     * @return \MicroCMS\Domain\Article
+     */
+    protected function buildDomainObject($row) {
+        $cotisation = new Cotisation();
+        $cotisation->setDate($row['cot_date']);
+        $cotisation->setMontant(15);
+        $cotisation->setAuteur(1);
+
+        return $cotisation;
+    }
+}

@@ -1,0 +1,103 @@
+{% extends "layout.html.twig" %}
+
+{% block title %}Gestion des adhérents{% endblock %}
+
+{% block content %}
+{% if adherentForm %}
+	{% if adherent.id %}
+	<h1>Modification de {{ adherent.civilite }}. {{ adherent.prenom }} {{ adherent.nom }}</h1><br>
+	{% else %}
+	<h1>Ajout d'un adhérent</h1><br>
+	{% endif %}
+	{{ form_start(adherentForm) }}
+		{{ form_errors(adherentForm.nom) }}
+		{{ form_errors(adherentForm.prenom) }}
+		{{ form_errors(adherentForm.adresse) }}
+		<div class="col-lg-3 form-group">
+			{{ form_widget(adherentForm.civilite, { 'attr':  {
+				'class': 'form-control',
+			}}) }}	
+		</div><div class="col-lg-4 form-group">
+			{{ form_widget(adherentForm.nom, { 'attr':  {
+				'class': 'form-control',
+				'placeholder': 'Nom' 
+			}}) }}
+		</div><div class="col-lg-3 form-group">
+			{{ form_widget(adherentForm.prenom, { 'attr':  {
+				'class': 'form-control',
+				'placeholder': 'Prenom'
+			}}) }}	
+		</div><div class="col-lg-2 form-group">
+			{{ form_widget(adherentForm.datenaiss, { 'attr':  {
+				'class': 'form-control',
+				'placeholder': 'Naissance'
+			}}) }}	
+		</div><div class="col-lg-12 form-group">
+			{{ form_widget(adherentForm.adresse, { 'attr':  {
+				'class': 'form-control',
+				'placeholder': 'Adresse'
+			}}) }}	
+		</div><div class="col-lg-3 form-group">
+			{{ form_widget(adherentForm.codepostal, { 'attr':  {
+				'class': 'form-control',
+				'placeholder': 'Code Postal'
+			}}) }}
+		</div><div class="col-lg-9 form-group">
+			{{ form_widget(adherentForm.ville, { 'attr':  {
+				'class': 'form-control',
+				'placeholder': 'Ville'
+			}}) }}	
+		</div><div class="col-lg-6 form-group">
+			{{ form_widget(adherentForm.departement, { 'attr':  {
+				'class': 'form-control',
+				'placeholder': 'Departement (en toute lettres)'
+			}}) }}
+		</div><div class="col-lg-6 form-group">
+			{{ form_widget(adherentForm.pays, { 'attr':  {
+				'class': 'form-control',
+				'placeholder': 'Pays (en toute lettres)'
+			}}) }}	
+		</div><div class="col-lg-12 form-group">
+			{{ form_widget(adherentForm.groupe, { 'attr':  {
+				'class': 'form-control',
+			}}) }}	
+		</div><div class="col-lg-12 form-group">
+			{{ form_widget(adherentForm.email, { 'attr':  {
+				'class': 'form-control',
+				'placeholder': 'Adresse Email'
+			}}) }}	
+		</div><div class="col-lg-6 form-group">
+			{{ form_widget(adherentForm.phone, { 'attr':  {
+				'class': 'form-control',
+				'placeholder': 'Téléphone Fixe'
+			}}) }}	
+		</div><div class="col-lg-6 form-group">
+			{{ form_widget(adherentForm.mobile, { 'attr':  {
+				'class': 'form-control',
+				'placeholder': 'Téléphone Mobile'
+			}}) }}	
+		</div>
+		<div class="col-lg-12 form-group">
+			<input type="submit" class="col-lg-12 btn btn-success" id="bt_hh" value="Valider" />
+		</div>
+	{{ form_end(adherentForm) }}
+	{% if adherent.id %}
+		<div class="col-lg-12 form-group"><a class="btn btn-primary col-lg-12" href="{{ path('adherent',{'id':adherent.id}) }}">Retour à la fiche utilisateur</a></div>
+	{% else %}
+		<div class="col-lg-12 form-group"><a class="btn btn-danger col-lg-12" href="{{ path('liste') }}">Annuler l'ajout et retour à la liste</a></div>
+	{% endif %}
+	{% for flashMessage in app.session.flashbag.get('success') %}
+		<div class="col-lg-12 alert alert-success">
+			{{ flashMessage }}
+		</div>
+	{% endfor %}
+	
+{% else %}
+	<br><br>
+	<div class="alert alert-danger" role="alert">Vous devez être connecté pour modifier un adhérent !</div>
+{% endif %}
+{% endblock %}
+{% block scripts %}
+<script>
+</script>
+{% endblock %}

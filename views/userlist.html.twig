@@ -1,0 +1,71 @@
+{% extends "layout.html.twig" %}
+
+{% block title %}Liste des utilisateurs{% endblock %}
+
+{% block content %}
+<h3>Liste des utilisateurs</h3>
+<div class="col-lg-12 form-group"><a class="btn btn-success col-lg-12" href="{{ path('user-add') }}">Ajouter un utilisateur</a></div>
+<div class="col-lg-12">
+<table class="table table-bordered table-striped table-condensed">
+	<thead>
+		<tr>
+			<th>Id</th>
+			<th>Nom d'utilisateur</th>
+			<th>Role</th>
+			<th>Prénom</th>
+			<th>Nom</th>
+			<th>Adhérent ?</th>
+			<th>Nom de l'adhérent</th>
+			<th>Action</th>
+		</tr>
+	</thead>
+	<tbody>
+	{% for user in users %}
+		<tr>
+			<td>{{ user.id }}</td>
+			<td>{{ user.username }}</td>
+			<td>
+			{% if user.role == "ROLE_ADMIN" %}
+				<span class="label label-primary">Administrateur</span>
+			{% else %}
+				<span class="label label-success">Utilisateur</span>
+			{% endif %}
+			</td>
+			<td>{{ user.prenom }}</td>
+			<td>{{ user.nom }}</td>
+			<td>
+			{% if user.isadh %}
+				<span class="label label-success">Oui</span>
+			{% else %}
+				<span class="label label-danger">Non</span>
+			{% endif %}
+			</td>
+			<td>
+			{% if user.idadh != 0 %}
+				<a href="{{ path('adherent',{'id':adherents[user.idadh].id}) }}">{{ adherents[user.idadh].nom }} {{ adherents[user.idadh].prenom }}</a>
+			{% else %}
+				<span class="label label-danger">Personne</span>
+			{% endif %}
+			</td>
+			<td>
+				<div class="dropdown">
+ 					<button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true">
+    					Action
+    					<span class="caret"></span>
+  					</button>
+  				<ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+    				<li role="presentation"><a role="menuitem" tabindex="-1" href="{{ path('user-mod',{'id':user.id}) }}">Modifier</a></li>
+    				<li role="presentation"><a role="menuitem" tabindex="-1" href="{{ path('user-del',{'id':user.id}) }}">Supprimer</a></li>
+  				</ul>
+				</div>
+			</td>
+		</tr>
+	{% endfor %}
+	</tbody>
+</table>
+</div>
+{% endblock %}
+{% block scripts %}
+<script>
+</script>
+{% endblock %}

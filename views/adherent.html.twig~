@@ -1,0 +1,153 @@
+{% extends "layout.html.twig" %}
+
+{% block title %}{{ adherent.prenom }} {{ adherent.nom }}{% endblock %}
+
+{% block content %}
+{% for flashMessage in app.session.flashbag.get('success') %}
+	<div class="col-lg-12 alert alert-success">
+		{{ flashMessage }}
+	</div>
+{% endfor %}
+	
+<h1>{{ adherent.civilite }}. {{ adherent.prenom }} {{ adherent.nom }}</h1>
+
+<div class="col-lg-6">
+<dl class="dl-horizontal">
+	<dt>Groupe</dt>
+	<dd><a href="{{ path('groupe',{'id':groupes[adherent.groupe].id}) }}">{{ groupes[adherent.groupe].libelle }}</a></dd>
+	<dt>Statut</dt>
+	<dd>
+		{% if adherent.isajour and groupes[adherent.groupe].typecotisation %}
+			<span class="label label-success">{{ adherent.prenom }} {{ adherent.nom }} est à jour dans ses cotisations</span>
+		{% elseif not adherent.isajour and groupes[adherent.groupe].typecotisation %}
+			<span class="label label-danger">{{ adherent.prenom }} {{ adherent.nom }} n'est pas à jour dans ses cotisations</span>
+		{% else %}
+			<span class="label label-info">{{ adherent.prenom }} {{ adherent.nom }} est exempt{% if adherent.civilite == "Mme" or adherent.civilite == "Mlle" %}e{% endif %} de cotisations</span>
+		{% endif %}	
+	</dd>
+</dl>
+<dl class="dl-horizontal">
+	<dt>Date de Naissance</dt>
+	{% if adherent.datenaiss == "1000-01-01" %}
+	<dd>Non renseigné</dd>
+	{% else %}
+	<dd>{{ adherent.datenaiss|date("d/m/Y") }}</dd>
+	{% endif %}
+	<dt>Adresse</dt>
+	{% if adherent.adresse == "noad" %}
+	<dd>Non renseigné</dd>
+	{% else %}
+	<dd>{{ adherent.adresse }}</dd>
+	{% endif %}
+	<dt>Code Postal</dt>
+	{% if adherent.codepostal == "noad" %}
+	<dd>Non renseigné</dd>
+	{% else %}
+	<dd>{{ adherent.codepostal }}</dd>
+	{% endif %}
+	<dt>Ville</dt>
+	{% if adherent.ville == "Noad" %}
+	<dd>Non renseigné</dd>
+	{% else %}
+	<dd>{{ adherent.ville }}</dd>
+	{% endif %}
+	<dt>Departement</dt>
+	{% if adherent.departement == "Noad" %}
+	<dd>Non renseigné</dd>
+	{% else %}
+	<dd>{{ adherent.departement }}</dd>
+	{% endif %}
+	<dt>Pays</dt>
+	{% if adherent.pays == "Noad" %}
+	<dd>Non renseigné</dd>
+	{% else %}
+	<dd>{{ adherent.pays }}</dd>
+	{% endif %}
+</dl>
+<dl class="dl-horizontal">
+	<dt>Email</dt>
+	{% if adherent.email == "noem" %}
+	<dd>Non renseigné</dd>
+	{% else %}
+	<dd><a href="mailto:{{ adherent.email }}">{{ adherent.email }}</a></dd>
+	{% endif %}
+	<dt>Tel. Principal</dt>
+	{% if adherent.phone == "0000000000" %}
+	<dd>Non renseigné</dd>
+	{% else %}
+	<dd>{{ adherent.phone }}</dd>
+	{% endif %}
+	<dt>Tel. Mobile</dt>
+	{% if adherent.mobile == "0000000000" %}
+	<dd>Non renseigné</dd>
+	{% else %}
+	<dd>{{ adherent.mobile }}</dd>
+	{% endif %}
+</dl>
+<dl class="dl-horizontal">
+	<dt>Identifiant Technique</dt>
+	<dd>{{ adherent.id }}</dd>
+	<dt>Date de création</dt>
+	<dd>{{ adherent.datecreation|date("d/m/Y - H:i") }}</dd>
+	<dt>Auteur</dt>
+	<dd>{{ users[adherent.userauteur].prenom }} {{ users[adherent.userauteur].nom }}</dd>
+	<dt>Dernière modification le</dt>
+	<dd>{{ adherent.datelastmod|date("d/m/Y - H:i") }}</dd>
+	<dt>Auteur</dt>
+	<dd>{{ users[adherent.userlastmodauteur].prenom }} {{ users[adherent.userlastmodauteur].nom }}</dd>
+</dl>
+<div class="col-lg-offset-2 btn-group" role="group" aria-label="...">
+	<a class="btn btn-info" href="{{ path('adherentmod',{'id':adherent.id}) }}">Modifier cet adhérent</a>
+	<a class="btn btn-danger supress-bout">Supprimer cet adhérent</a>
+</div>
+</div>
+<div class="col-lg-6">
+<table class="table table-bordered table-striped table-condensed" id="table_adh">
+	<caption>Cotisation payées par {{ adherent.prenom }} {{ adherent.nom }}</caption>
+	<thead>
+		<tr>
+			<th>Id</th>
+			<th>Date</th>
+			<th>Montant</th>
+			<th>Auteur</th>
+			<th>Action</th>
+		</tr>
+	</thead>
+	<tbody>
+		{% for cotisation in cotisations %}
+			{% if cotisation.date|date("Y") == "now"|date("Y") %} <tr class="info"> {% else %} <tr class="warning">{% endif %}
+		
+				<td>{{ cotisation.id }}</td>
+				<td>{{ cotisation.date|date("d/m/Y H:i") }}</td>
+				<td>{{ cotisation.montant }} &euro;</td>
+				<td>{{ users[cotisation.auteur].prenom }} {{ users[cotisation.auteur].nom }}</td>
+				<td>
+					<div class="dropdown">
+ 					<button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true">
+    					Action
+    					<span class="caret"></span>
+  					</button>
+  					<ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+    					<li role="presentation"><a role="menuitem" tabindex="-1" href="{{ path('cot-mod',{'id':cotisation.id}) }}">Modifier</a></li>
+    					<li role="presentation"><a role="menuitem" tabindex="-1" href="{{ path('cot-del',{'id':cotisation.id}) }}">Supprimer</a></li>
+  					</ul>
+					</div>
+				</td>
+			</tr>
+		{% endfor %}
+	</tbody>
+</table>
+<a class="col-lg-12 btn btn-success" href="{{ path('cot-add',{'idadh':adherent.id}) }}">Ajouter une cotisation</a>
+</div>
+{% endblock %}
+{% block scripts %}
+<script>
+$(document).on("click", ".supress-bout", function(e) {
+bootbox.confirm("Voulez vous vraiment supprimer {{ adherent.prenom }} {{ adherent.nom }} et TOUTE ses cotisations ?", function(result) {  
+  if (result) {
+  	document.location.href = "{{ path('adherentdel',{'id':adherent.id}) }}";
+  }
+}); 
+        });
+</script>
+{% endblock %}
