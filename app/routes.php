@@ -107,33 +107,6 @@ $app->match('/logged/adherent-add/', function (Request $request) use ($app) {
 		$adherentForm = $app['form.factory']->create(new AdherentType($groupes), $adherent);
 		$adherentForm->handleRequest($request);
 		if ($adherentForm->isSubmitted() && $adherentForm->isValid()) {
-			if ($adherent->getDatenaiss() == null) {
-				$adherent->setDatenaiss("1000-01-01");
-			}
-			if ($adherent->getMobile() == null) {
-				$adherent->setMobile("0000000000");
-			}
-			if ($adherent->getPhone() == null) {
-				$adherent->setPhone("0000000000");
-			}
-			if ($adherent->getEmail() == null) {
-				$adherent->setEmail("noem");
-			}
-			if ($adherent->getAdresse() == null) {
-				$adherent->setAdresse("noad");
-			}
-			if ($adherent->getDepartement() == null) {
-				$adherent->setDepartement("noad");
-			}
-			if ($adherent->getPays() == null) {
-				$adherent->setPays("noad");
-			}
-			if ($adherent->getVille() == null) {
-				$adherent->setVille("noad");
-			}
-			if ($adherent->getCodepostal() == null) {
-				$adherent->setCodepostal("noad");
-			}
 			$app['dao.adherent']->save($adherent, $usernow);
 			$app['session']->getFlashBag()->add('success', 'L\'utilisateur a bien été ajouté');
 			return $app->redirect($app["url_generator"]->generate("adherent", array('id' => $adherent->getId())));

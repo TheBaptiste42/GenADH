@@ -133,7 +133,6 @@ class Adherent
 	public function getEmail() { return $this->email; }
 	public function getPhone() { return $this->phone; }
 	public function getMobile() { return $this->mobile; }
-	public function getDateNaiss() { return $this->datenaiss; }
 	public function getDateCreation() { return $this->datecreation; }
 	public function getUserAuteur() { return $this->user_auteur; } 
 	public function getDateLastMod() { return $this->datelastmod; }
@@ -146,39 +145,16 @@ class Adherent
 	public function setPrenom($prenom) { $this->prenom = ucfirst($prenom); }
 	public function setGroupe($groupe) { $this->groupe = $groupe; }
 	public function setAdresse($adresse) { $this->adresse = $adresse; }
-    	public function setCodePostal($codepostal) {
-    		$this->codepostal = $codepostal;
-   	}
-    	public function setVille($ville) {
-    		$this->ville = ucfirst($ville);
-   	}
-    	public function setDepartement($departement) {
-    		$this->departement = ucfirst($departement);
-   	}
+   public function setCodePostal($codepostal) { $this->codepostal = $codepostal; }
+   public function setVille($ville) { $this->ville = ucfirst($ville); }
+   public function setDepartement($departement) { $this->departement = ucfirst($departement); }
 	public function setPays($pays) { $this->pays = ucfirst($pays); }
-    	public function setEmail($email) {
-    		$this->email = $email;
-   	}
-    	public function setPhone($phone) {
-    		$this->phone = $phone;
-   	}
-    	public function setMobile($mobile) {
-    		$this->mobile = $mobile;
-   	}
-    	public function setDateNaiss($datenaiss) {
-    		$this->datenaiss = $datenaiss;
-   	}
-    	public function setDateCreation($datecreation) {
-    		$this->datecreation = $datecreation;
-   	}
-    	public function setUserAuteur($user_auteur) {
-    		$this->user_auteur = $user_auteur;
-   	}
-	public function setDateLastMod($datelastmod) {
-    		$this->datelastmod = $datelastmod;
-   	}
-    	public function setUserLastModAuteur($user_lastmodauteur) {
-    		$this->user_lastmodauteur = $user_lastmodauteur;
-   	}
+   public function setEmail($email) { $this->email = $email; }
+   public function setPhone($phone) { $this->phone = $phone; }
+   public function setMobile($mobile) { $this->mobile = $mobile; }
+   public function setDateCreation($datecreation) { $this->datecreation = $datecreation; }
+   public function setUserAuteur($user_auteur) { $this->user_auteur = $user_auteur; }
+   public function setDateLastMod($datelastmod) { $this->datelastmod = $datelastmod; }
+   public function setUserLastModAuteur($user_lastmodauteur) { $this->user_lastmodauteur = $user_lastmodauteur; }
 	public function setIsajour($isajour) { $this->isajour = $isajour; }
 }

@@ -25,9 +25,9 @@ class AdherentType extends AbstractType
 			$builder->add('datenaiss', 'date', array('required' => false, 'input' => 'string','widget' => 'single_text','format' => 'dd/MM/yyyy'));
 			$builder->add('adresse', 'text', array('required' => false));
 			$builder->add('codepostal', 'text', array('required' => false));
-			$builder->add('ville', 'text'), array('required' => false));
+			$builder->add('ville', 'text', array('required' => false));
 			$builder->add('departement', 'text', array('required' => false));
-			$builder->add('pays', 'text'), array('required' => false));
+			$builder->add('pays', 'text', array('required' => false));
 			
 			$builder->add('groupe', 'choice', array('choices' => $this->grplist));
 			

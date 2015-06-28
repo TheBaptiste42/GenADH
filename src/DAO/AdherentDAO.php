@@ -78,7 +78,6 @@ class AdherentDAO extends DAO
 				'adh_email' => $adherent->getEmail(),
 				'adh_phone' => $adherent->getPhone(),
 				'adh_mobile' => $adherent->getMobile(),
-				'adh_datenaiss' => $adherent->getDateNaiss(),
 				'adh_datelastmod' => $datenow,
 				'int_user_lastmodauteur' => $usernow->getId(),
 				'adh_isajour' => $adherent->getIsajour()
@@ -125,7 +124,6 @@ class AdherentDAO extends DAO
         $adherent->setEmail($row['adh_email']);
         $adherent->setPhone($row['adh_phone']);
         $adherent->setMobile($row['adh_mobile']);
-        $adherent->setDateNaiss($row['adh_datenaiss']);
         $adherent->setDateCreation($row['adh_datecreation']);
         $adherent->setUserAuteur($row['int_user_auteur']);
         $adherent->setDateLastMod($row['adh_datelastmod']);

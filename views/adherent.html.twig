@@ -27,12 +27,6 @@
 	</dd>
 </dl>
 <dl class="dl-horizontal">
-	<dt>Date de Naissance</dt>
-	{% if adherent.datenaiss == "1000-01-01" %}
-	<dd>Non renseigné</dd>
-	{% else %}
-	<dd>{{ adherent.datenaiss|date("d/m/Y") }}</dd>
-	{% endif %}
 	<dt>Adresse</dt>
 	{% if adherent.adresse == "" %}
 	<dd>Non renseigné</dd>

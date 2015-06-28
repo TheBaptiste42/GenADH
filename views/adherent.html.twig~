@@ -34,31 +34,31 @@
 	<dd>{{ adherent.datenaiss|date("d/m/Y") }}</dd>
 	{% endif %}
 	<dt>Adresse</dt>
-	{% if adherent.adresse == "noad" %}
+	{% if adherent.adresse == "" %}
 	<dd>Non renseigné</dd>
 	{% else %}
 	<dd>{{ adherent.adresse }}</dd>
 	{% endif %}
 	<dt>Code Postal</dt>
-	{% if adherent.codepostal == "noad" %}
+	{% if adherent.codepostal == "" %}
 	<dd>Non renseigné</dd>
 	{% else %}
 	<dd>{{ adherent.codepostal }}</dd>
 	{% endif %}
 	<dt>Ville</dt>
-	{% if adherent.ville == "Noad" %}
+	{% if adherent.ville == "" %}
 	<dd>Non renseigné</dd>
 	{% else %}
 	<dd>{{ adherent.ville }}</dd>
 	{% endif %}
 	<dt>Departement</dt>
-	{% if adherent.departement == "Noad" %}
+	{% if adherent.departement == "" %}
 	<dd>Non renseigné</dd>
 	{% else %}
 	<dd>{{ adherent.departement }}</dd>
 	{% endif %}
 	<dt>Pays</dt>
-	{% if adherent.pays == "Noad" %}
+	{% if adherent.pays == "" %}
 	<dd>Non renseigné</dd>
 	{% else %}
 	<dd>{{ adherent.pays }}</dd>
@@ -66,19 +66,19 @@
 </dl>
 <dl class="dl-horizontal">
 	<dt>Email</dt>
-	{% if adherent.email == "noem" %}
+	{% if adherent.email == "" %}
 	<dd>Non renseigné</dd>
 	{% else %}
 	<dd><a href="mailto:{{ adherent.email }}">{{ adherent.email }}</a></dd>
 	{% endif %}
 	<dt>Tel. Principal</dt>
-	{% if adherent.phone == "0000000000" %}
+	{% if adherent.phone == "" %}
 	<dd>Non renseigné</dd>
 	{% else %}
 	<dd>{{ adherent.phone }}</dd>
 	{% endif %}
 	<dt>Tel. Mobile</dt>
-	{% if adherent.mobile == "0000000000" %}
+	{% if adherent.mobile == "" %}
 	<dd>Non renseigné</dd>
 	{% else %}
 	<dd>{{ adherent.mobile }}</dd>

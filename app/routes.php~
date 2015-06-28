@@ -19,7 +19,7 @@ $app->get('/logged', function () use ($app) {
 })->bind('ac');
 
 $app->get('/logged/liste', function () use ($app) {
-   $adherents = $app['dao.adherent']->findAll();
+   $adherents = $app['dao.adherent']->findAllClassedByName();
 	$users = $app['dao.user']->findAll();
 	$groupes = $app['dao.groupe']->findAll();
 	$cotisations = $app['dao.cotisation']->findAllByUser();

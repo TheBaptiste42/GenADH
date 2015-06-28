@@ -22,7 +22,6 @@ class AdherentType extends AbstractType
 			$builder->add('civilite', 'choice', array('choices' => array('M' => 'M', 'Mme' => 'Mme', 'Mlle' => 'Mlle')));			
 			$builder->add('nom', 'text');
 			$builder->add('prenom', 'text');
-			$builder->add('datenaiss', 'date', array('required' => false, 'input' => 'string','widget' => 'single_text','format' => 'dd/MM/yyyy'));
 			$builder->add('adresse', 'text', array('required' => false));
 			$builder->add('codepostal', 'text', array('required' => false));
 			$builder->add('ville', 'text', array('required' => false));
