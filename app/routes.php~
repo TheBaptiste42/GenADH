@@ -401,21 +401,3 @@ $app->match('/logged/cot-del/{id}', function ($id, Request $request) use ($app) 
 	return $app->redirect($app["url_generator"]->generate("adherent", array('id' => $cotisation->getAdhid())));
 	
 })->bind("cot-del");
-
-$app->match('/logged/maint/trsduiofhsuiohfiosdhfiohoansf', function (Request $request) use ($app) {
-	$usernow = $app['security']->getToken()->getUser();
-	for ($i = 0; $i < 201; $i++){
-		$user = $app['dao.mnt']->find($i);
-		if (!empty($user)) {
-			$app['dao.mnt']->save($user,$usernow);
-			$cots = $app['dao.mntCo']->findByUser($i);
-			foreach ($cots as $cot) {
-				$cot->setAdhId($user->getId());
-				$app['dao.mntCo']->save($cot,$usernow);
-			}
-		}
-	}
-
-	return true;
-	
-});

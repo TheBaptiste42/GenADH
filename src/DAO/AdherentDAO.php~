@@ -20,6 +20,19 @@ class AdherentDAO extends DAO
         return $adherents;
     }
     
+    public function findAllClassedByName() {
+        $sql = "SELECT * FROM `t_adherent` order by adh_nom asc";
+        $result = $this->getDb()->fetchAll($sql);
+        
+        // Convert query result to an array of domain objects
+        $adherents = array();
+        foreach ($result as $row) {
+            $adherentId = $row['adh_id'];
+            $adherents[$adherentId] = $this->buildDomainObject($row);
+        }
+        return $adherents;
+    }
+    
 	/**
 	* Returns an article matching the supplied id.
 	*
@@ -67,7 +80,8 @@ class AdherentDAO extends DAO
 				'adh_mobile' => $adherent->getMobile(),
 				'adh_datenaiss' => $adherent->getDateNaiss(),
 				'adh_datelastmod' => $datenow,
-				'int_user_lastmodauteur' => $usernow->getId()
+				'int_user_lastmodauteur' => $usernow->getId(),
+				'adh_isajour' => $adherent->getIsajour()
 			);
 			if ($adherent->getId()) {
 				

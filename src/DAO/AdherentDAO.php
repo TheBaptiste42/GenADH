@@ -20,6 +20,19 @@ class AdherentDAO extends DAO
         return $adherents;
     }
     
+    public function findAllClassedByName() {
+        $sql = "SELECT * FROM `t_adherent` order by adh_nom asc";
+        $result = $this->getDb()->fetchAll($sql);
+        
+        // Convert query result to an array of domain objects
+        $adherents = array();
+        foreach ($result as $row) {
+            $adherentId = $row['adh_id'];
+            $adherents[$adherentId] = $this->buildDomainObject($row);
+        }
+        return $adherents;
+    }
+    
 	/**
 	* Returns an article matching the supplied id.
 	*
