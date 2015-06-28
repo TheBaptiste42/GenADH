@@ -59,12 +59,12 @@ $app->get('/login', function(Request $request) use ($app) {
     ));
 })->bind('login');  // named route so that path('login') works in Twig templates
 
-$app->get('/hashpwd', function() use ($app) {
+/*$app->get('/hashpwd', function() use ($app) {
     $rawPassword = 'louis1';
     $salt = '%qUgq3NAYfj1MiwqW?yevbE';
     $encoder = $app['security.encoder.digest'];
     return $encoder->encodePassword($rawPassword, $salt);
-});
+});*/
 
 $app->get('/logged/adherent/{id}', function ($id) use ($app) {
    $adherent = $app['dao.adherent']->find($id);
